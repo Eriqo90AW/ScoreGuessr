@@ -5,6 +5,7 @@
     <color name="selected_bg">#B0D6DF</color>
     <color name="border">#C4D2D6</color>
     <color name="background">#F6F5F5</color>
+    <color name="card_background">#ECECEC</color>
     <color name="selected_green">#259F6C</color>
     <color name="primary_button">#0BCE83</color>
     <color name="green">#CBF265</color>
