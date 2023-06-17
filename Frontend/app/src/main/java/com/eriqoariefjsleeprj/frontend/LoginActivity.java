@@ -24,6 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private BaseApiService retrofitInterface;
+    protected static User currentUser = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,11 +77,15 @@ public class LoginActivity extends AppCompatActivity {
                             if(result.getUsername() == null){
                                 Toast.makeText(LoginActivity.this, "Wrong username/password", Toast.LENGTH_SHORT).show();
                             }else{
-                                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-
-                                builder.setTitle(result.getUsername());
-                                builder.setMessage(result.getEmail());
-                                builder.show();
+//                                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+//
+//                                builder.setTitle(result.getUsername());
+//                                builder.setMessage(result.getEmail());
+//                                builder.show();
+                                currentUser = result;
+                                Intent move = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(move);
+                                finish();
                             }
                         }else if (response.code() == 400){
                             Toast.makeText(LoginActivity.this, "Wrong username/password", Toast.LENGTH_LONG).show();

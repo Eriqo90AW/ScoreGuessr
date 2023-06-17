@@ -37,6 +37,7 @@ public class LandingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent loginIntent= new Intent(LandingActivity.this, LoginActivity.class);
                 startActivity(loginIntent);
+                finish();
             }
         });
 

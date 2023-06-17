@@ -7,7 +7,7 @@
 <!--        <item name="android:windowTranslucentNavigation">true</item>-->
         <item name="android:windowBackground">@color/selected_green</item>
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/text_primary</item>
+        <item name="colorPrimary">@color/primary_button</item>
         <item name="colorPrimaryVariant">@color/text_secondary</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
