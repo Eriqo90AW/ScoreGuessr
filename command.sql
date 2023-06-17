@@ -5,7 +5,7 @@ CREATE TABLE users (
   password VARCHAR(255) NOT NULL,
   predictions_id INT[],
   mini_league_code VARCHAR(10),
-  total_points FLOAT,
+  total_points FLOAT DEFAULT 0,
   rewards_id INT[]
   FOREIGN KEY (mini_league_code) REFERENCES mini_leagues (code) ON DELETE CASCADE,
 );

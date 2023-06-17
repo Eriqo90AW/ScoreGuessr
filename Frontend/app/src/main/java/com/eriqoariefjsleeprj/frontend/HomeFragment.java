@@ -1,5 +1,6 @@
 package com.eriqoariefjsleeprj.frontend;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,20 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.eriqoariefjsleeprj.frontend.databinding.FragmentHomeBinding;
+import com.eriqoariefjsleeprj.frontend.misc.UpcomingListAdapter;
+import com.eriqoariefjsleeprj.frontend.model.Fixture;
+import com.eriqoariefjsleeprj.frontend.request.BaseApiService;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +38,11 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Retrofit retrofit;
+    private BaseApiService retrofitInterface;
+    private FragmentHomeBinding binding;
+    private Context context;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -59,6 +79,60 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        View rootView = binding.getRoot();
+        context = getContext();
+
+        if (context == null){
+            context = getActivity();
+        }
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(LandingActivity.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        retrofitInterface = retrofit.create(BaseApiService.class);
+
+        Call<ArrayList<Fixture>> call = retrofitInterface.getFixtures();
+        call.enqueue(new Callback<ArrayList<Fixture>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Fixture>> call, Response<ArrayList<Fixture>> response) {
+                if(response.code() == 200){
+                    ArrayList<Fixture> fixtures = response.body();
+                    if(fixtures != null && !fixtures.isEmpty()){
+                        UpcomingListAdapter upcomingListAdapter = new UpcomingListAdapter(context, fixtures);
+                        binding.listUpcoming.setAdapter(upcomingListAdapter);
+                        binding.listUpcoming.setClickable(true);
+//                        binding.listUpcoming.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                            @Override
+//                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+//                                if (context != null) {
+//                                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//                                    builder.setTitle(fixtures.get(position).home_id);
+//                                    builder.setMessage(fixtures.get(position).away_id);
+//                                    builder.show();
+//                                } else {
+//                                    Toast.makeText(context, "Failed to create dialog", Toast.LENGTH_LONG).show();
+//                                }
+//
+//                            }
+//                        });
+
+                    }else{
+                        Toast.makeText(context, "Failed to load data", Toast.LENGTH_SHORT).show();
+                    }
+                }else if (response.code() == 400){
+                    Toast.makeText(context, "Failed to reach server", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Fixture>> call, Throwable t) {
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return rootView;
     }
 }

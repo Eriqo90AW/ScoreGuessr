@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="10dp"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:id="@+id/rewards_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.2"
+            android:src="@drawable/ic_baseline_remove_circle_24" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:id="@+id/rewards_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:text="Google Play $5"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/rewards_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:text="Giftcard"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0"
+            android:layout_marginRight="12dp"
+            >
+            <TextView
+                android:id="@+id/rewards_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:layout_gravity="center"
+                android:text="14,999"
+                android:textColor="@color/black" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_tight_medium"
+                android:layout_gravity="center"
+                android:text="points"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="70dp"
+            android:layout_height="45dp"
+            android:background="@drawable/custom_button_border"
+            android:backgroundTint="@color/primary_button">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Redeem"
+                android:textSize="16sp"
+                android:fontFamily="@font/inter_tight_medium"
+                android:textColor="@color/white"
+                android:layout_gravity="center" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:background="#00000000"
+                android:fontFamily="@font/inter_tight_medium" />
+
+
+
+        </FrameLayout>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

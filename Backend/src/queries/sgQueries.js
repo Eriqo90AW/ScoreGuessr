@@ -1,12 +1,15 @@
 const getUpcomingGames = `
-SELECT *
-FROM fixtures
-WHERE gameweek = (
+SELECT f.*, t_home.name AS home_team, t_away.name AS away_team, t_home.crest AS home_crest, t_away.crest AS away_crest
+FROM fixtures AS f
+JOIN teams AS t_home ON f.home_id = t_home.id
+JOIN teams AS t_away ON f.away_id = t_away.id
+WHERE f.gameweek = (
     SELECT DISTINCT gameweek
     FROM fixtures
     WHERE status = 'Upcoming'
     LIMIT 1
 );
+
 `;
 
 const getMiniLeagueUsers = `
