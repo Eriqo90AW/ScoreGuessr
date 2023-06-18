@@ -20,7 +20,7 @@ This project is made by myself, a student of computer engineering Universitas In
 
 ## Postman Documentation Collection
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/24268852-b947e88d-f7e3-4e1b-bfc6-f7fb38a1b957?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D24268852-b947e88d-f7e3-4e1b-bfc6-f7fb38a1b957%26entityType%3Dcollection%26workspaceId%3Da53d3bdf-1a0a-4f30-9f16-d8f36a8229d4)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://documenter.getpostman.com/view/24268852/2s93si2Aio)
 
 ---
 
@@ -120,11 +120,11 @@ Tabel "rewards" digunakan untuk menyimpan data hadiah (rewards). Tabel ini memil
 
 `Table Relational atau ERD:`
 
-![alt text!](https://github.com/Eriqo90AW/ScoreGuessr/main/Assets/ERD_ScoreGuessr.png)
+![alt text!](https://github.com/Eriqo90AW/ScoreGuessr/blob/main/Assets/ERD_ScoreGuessr.png)
 
 `UML:`
 
-![alt text!](https://github.com/Eriqo90AW/ScoreGuessr/main/Assets/UML_ScoreGuessr.png)
+![alt text!](https://github.com/Eriqo90AW/ScoreGuessr/blob/main/Assets/UML_ScoreGuessr.png)
 
 ---
 
@@ -132,6 +132,6 @@ Tabel "rewards" digunakan untuk menyimpan data hadiah (rewards). Tabel ini memil
 
 `FlowChart:`
 
-![alt text!](https://github.com/Eriqo90AW/ScoreGuessr/main/Assets/FlowChart_ScoreGuessr.png)
+![alt text!](https://github.com/Eriqo90AW/ScoreGuessr/blob/main/Assets/FlowChart_ScoreGuessr.png)
 
 ---
