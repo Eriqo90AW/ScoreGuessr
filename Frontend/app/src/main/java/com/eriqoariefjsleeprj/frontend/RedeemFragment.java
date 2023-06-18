@@ -17,6 +17,7 @@ import com.eriqoariefjsleeprj.frontend.misc.UpcomingListAdapter;
 import com.eriqoariefjsleeprj.frontend.model.Fixture;
 import com.eriqoariefjsleeprj.frontend.model.Reward;
 import com.eriqoariefjsleeprj.frontend.request.BaseApiService;
+import com.eriqoariefjsleeprj.frontend.request.UtilsApi;
 
 import java.util.ArrayList;
 
@@ -42,8 +43,8 @@ public class RedeemFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private Retrofit retrofit;
-    private BaseApiService retrofitInterface;
+    BaseApiService mApiService;
+    Context mContext;
     private FragmentRedeemBinding binding;
     private Context context;
 
@@ -84,46 +85,46 @@ public class RedeemFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentRedeemBinding.inflate(inflater, container, false);
         View rootView = binding.getRoot();
-        context = getContext();
 
-        if (context == null){
-            context = getActivity();
+        mApiService = UtilsApi.getApiService();
+        mContext = getContext();
+
+        if (mContext == null){
+            mContext = getActivity();
         }
 
         //update user's point balance
-//        binding.rewardsPointsBalance.setText(String.valueOf(LoginActivity.currentUser.getTotal_points()));
-        binding.rewardsPointsBalance.setText(String.valueOf(-1));
-        retrofit = new Retrofit.Builder()
-                .baseUrl(LandingActivity.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        binding.rewardsPointsBalance.setText(String.valueOf(LoginActivity.currentUser.getTotal_points()));
+//        binding.rewardsPointsBalance.setText(String.valueOf(-1));
 
-        retrofitInterface = retrofit.create(BaseApiService.class);
+        requestRewards();
 
-        Call<ArrayList<Reward>> call = retrofitInterface.getRewards();
+        return rootView;
+    }
 
-        call.enqueue(new Callback<ArrayList<Reward>>() {
+    protected ArrayList<Reward> requestRewards(){
+        mApiService.getRewards().enqueue(new Callback<ArrayList<Reward>>() {
             @Override
             public void onResponse(Call<ArrayList<Reward>> call, Response<ArrayList<Reward>> response) {
                 if (response.code() == 200) {
                     ArrayList<Reward> rewards = response.body();
                     if(rewards != null && !rewards.isEmpty()) {
-                        RewardsListAdapter rewardsListAdapter = new RewardsListAdapter(context, rewards);
+                        RewardsListAdapter rewardsListAdapter = new RewardsListAdapter(mContext, rewards);
                         binding.listRewards.setAdapter(rewardsListAdapter);
                         binding.listRewards.setClickable(true);
                     }else{
-                        Toast.makeText(context, "Failed to load data", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Failed to load data", Toast.LENGTH_SHORT).show();
                     }
                 } else if (response.code() == 400) {
-                    Toast.makeText(context, "Failed to reach server", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Bad Request", Toast.LENGTH_LONG).show();
                 }
             }
+
             @Override
             public void onFailure(Call<ArrayList<Reward>> call, Throwable t) {
-                    Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Failed to reach server", Toast.LENGTH_SHORT).show();
             }
         });
-
-        return rootView;
+        return null;
     }
 }

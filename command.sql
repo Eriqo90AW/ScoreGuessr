@@ -70,6 +70,11 @@ CREATE TABLE rewards (
   cost BIGINT NOT NULL
 );
 
+CREATE TABLE refresh_tokens (
+  id SERIAL PRIMARY KEY,
+  token TEXT NOT NULL
+);
+
 INSERT INTO fixtures (home_id, home_score, home_odds, away_id, away_score, away_odds, date, status, gameweek)
 VALUES
   (9, 0, 1.0, 12, 0, 2.1, '2022-08-06', 'Upcoming', 1),

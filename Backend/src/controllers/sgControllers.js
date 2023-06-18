@@ -63,15 +63,6 @@ async function getAllRewards(req, res) {
   }
 }
 
-async function login(req, res) {
-  try {
-      const result = await sgServices.login(req.body);
-      res.status(200).json(result);
-  } catch (err) {
-      res.status(400).json({ message: err.message });
-  }
-}
-
 async function register(req, res) {
   try {
       const result = await sgServices.register(req.body);
@@ -331,7 +322,6 @@ module.exports = { getAllUsers,
                     getAllMiniLeagues,
                     getAllMiniLeagueUsers,
                     getAllRewards,
-                    login, 
                     register, 
                     deleteUser,
                     updateUserPredictions, 

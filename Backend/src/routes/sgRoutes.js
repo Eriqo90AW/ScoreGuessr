@@ -11,7 +11,6 @@ router.get('/mini-leagues', sgControllers.getAllMiniLeagues);
 router.get('/mini-leagues-users', sgControllers.getAllMiniLeagueUsers);
 router.get('/rewards', sgControllers.getAllRewards);
 
-router.post('/login', sgControllers.login);
 router.post('/register', sgControllers.register);
 router.delete('/delete/:id', sgControllers.deleteUser);
 router.put('/updatePredictions/:id', sgControllers.updateUserPredictions);

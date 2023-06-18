@@ -14,6 +14,7 @@ import com.eriqoariefjsleeprj.frontend.databinding.FragmentHomeBinding;
 import com.eriqoariefjsleeprj.frontend.misc.UpcomingListAdapter;
 import com.eriqoariefjsleeprj.frontend.model.Fixture;
 import com.eriqoariefjsleeprj.frontend.request.BaseApiService;
+import com.eriqoariefjsleeprj.frontend.request.UtilsApi;
 
 import java.util.ArrayList;
 
@@ -43,6 +44,8 @@ public class HomeFragment extends Fragment {
     private BaseApiService retrofitInterface;
     private FragmentHomeBinding binding;
     private Context context;
+    BaseApiService mApiService;
+    Context mContext;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -81,27 +84,27 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View rootView = binding.getRoot();
-        context = getContext();
+//        context = getContext();
+        mApiService = UtilsApi.getApiService();
+        mContext = getContext();
 
-        if (context == null){
-            context = getActivity();
+        if (mContext == null){
+            mContext = getActivity();
         }
 
-        retrofit = new Retrofit.Builder()
-                .baseUrl(LandingActivity.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        requestFixtures();
 
-        retrofitInterface = retrofit.create(BaseApiService.class);
+        return rootView;
+    }
 
-        Call<ArrayList<Fixture>> call = retrofitInterface.getFixtures();
-        call.enqueue(new Callback<ArrayList<Fixture>>() {
+    protected ArrayList<Fixture> requestFixtures(){
+        mApiService.getFixtures().enqueue(new Callback<ArrayList<Fixture>>() {
             @Override
             public void onResponse(Call<ArrayList<Fixture>> call, Response<ArrayList<Fixture>> response) {
                 if(response.code() == 200){
                     ArrayList<Fixture> fixtures = response.body();
                     if(fixtures != null && !fixtures.isEmpty()){
-                        UpcomingListAdapter upcomingListAdapter = new UpcomingListAdapter(context, fixtures);
+                        UpcomingListAdapter upcomingListAdapter = new UpcomingListAdapter(mContext, fixtures);
                         binding.listUpcoming.setAdapter(upcomingListAdapter);
                         binding.listUpcoming.setClickable(true);
 //                        binding.listUpcoming.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -118,21 +121,19 @@ public class HomeFragment extends Fragment {
 //
 //                            }
 //                        });
-
                     }else{
-                        Toast.makeText(context, "Failed to load data", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Failed to load data", Toast.LENGTH_SHORT).show();
                     }
                 }else if (response.code() == 400){
-                    Toast.makeText(context, "Failed to reach server", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Failed to reach server", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Fixture>> call, Throwable t) {
-                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-        return rootView;
+        return null;
     }
 }

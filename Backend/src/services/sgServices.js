@@ -90,28 +90,6 @@ async function getAllRewards(){
 }
 
 //USERS TABLE
-async function login (user){
-    const {username, password} = user;
-    const query = `SELECT * FROM users WHERE username = $1`;
-    const values = [username];
-    const result = await db.query(query, values);
-    if(result.rows.length === 0){
-        return {
-            message: 'User not found'
-        }
-    }else{
-        const user = result.rows[0];
-        const pass = await bcrypt.compare(password, user.password);
-        if(pass){
-            return user;
-        }else{
-            return {
-                message: 'Password is not correct'
-            }
-        }
-    }
-}
-
 async function register (user){
     const {username, password, email} = user;
     const pass = await bcrypt.hash(password, 10);
@@ -561,7 +539,6 @@ module.exports = { getAllUsers,
                     getAllMiniLeagues,
                     getAllMiniLeagueUsers,
                     getAllRewards,
-                    login, 
                     register, 
                     deleteUser,
                     updateUserPredictions,

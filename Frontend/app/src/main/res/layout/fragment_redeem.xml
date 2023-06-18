@@ -85,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:fontFamily="@font/inter_bold"
-                    android:layout_marginRight="18dp"
+                    android:layout_marginRight="20dp"
                     android:textAlignment="textEnd"
                     android:layout_weight="1"
                     android:textSize="20sp"
