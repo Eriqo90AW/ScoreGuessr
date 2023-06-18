@@ -95,7 +95,6 @@ public class RedeemFragment extends Fragment {
 
         //update user's point balance
         binding.rewardsPointsBalance.setText(String.valueOf(LoginActivity.currentUser.getTotal_points()));
-//        binding.rewardsPointsBalance.setText(String.valueOf(-1));
 
         requestRewards();
 
