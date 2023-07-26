@@ -41,4 +41,12 @@ public class User {
     public int[] getRewards_id() {
         return rewards_id;
     }
+
+    public void setTotal_points(float total_points) {
+        this.total_points = total_points;
+    }
+
+    public void setMini_league_code(String mini_league_code) {
+        this.mini_league_code = mini_league_code;
+    }
 }

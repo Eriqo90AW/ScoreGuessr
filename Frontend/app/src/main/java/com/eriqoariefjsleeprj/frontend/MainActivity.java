@@ -42,12 +42,18 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.home:
+                    binding.mainMyRewardsButton.setVisibility(View.GONE);
+                    binding.mainLogoutButton.setVisibility(View.VISIBLE);
                     replaceFragment(new HomeFragment());
                     break;
                 case R.id.mini_league:
+                    binding.mainMyRewardsButton.setVisibility(View.GONE);
+                    binding.mainLogoutButton.setVisibility(View.VISIBLE);
                     replaceFragment(new MiniLeagueFragment());
                     break;
                 case R.id.redeem:
+                    binding.mainMyRewardsButton.setVisibility(View.VISIBLE);
+                    binding.mainLogoutButton.setVisibility(View.GONE);
                     replaceFragment(new RedeemFragment());
                     break;
             }
@@ -59,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
             String storedToken = preferences.getRefreshToken();
             RefreshData token = new RefreshData(storedToken);
             requestLogout(token);
+        });
+
+        binding.mainMyRewardsButton.setOnClickListener(item -> {
+            replaceFragment(new MyRewardFragment());
         });
 
     }

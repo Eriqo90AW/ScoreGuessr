@@ -30,7 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private BaseApiService retrofitInterface;
-    protected static User currentUser = null;
+    public static User currentUser = null;
     BaseApiService mApiService;
     Context mContext;
 
@@ -41,13 +41,6 @@ public class LoginActivity extends AppCompatActivity {
 
         mApiService = UtilsApi.getApiService();
         mContext = this;
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl(LandingActivity.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        retrofitInterface = retrofit.create(BaseApiService.class);
 
         findViewById(R.id.login_backButton).setOnClickListener(new View.OnClickListener() {
             @Override

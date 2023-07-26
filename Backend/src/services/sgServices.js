@@ -499,7 +499,7 @@ async function getMiniLeagueInfo(code){
     const values = [code];
     const result = await db.query(query, values);
     if(result.rows.length > 0){
-        return result.rows;
+        return result.rows[0];
     }else{
         return {
             message: 'There is no information about this mini league'

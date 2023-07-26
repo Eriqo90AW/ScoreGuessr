@@ -8,14 +8,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.eriqoariefjsleeprj.frontend.databinding.FragmentHomeBinding;
+import com.eriqoariefjsleeprj.frontend.databinding.FragmentMyRewardBinding;
 import com.eriqoariefjsleeprj.frontend.databinding.FragmentRedeemBinding;
+import com.eriqoariefjsleeprj.frontend.misc.MyRewardsListAdapter;
 import com.eriqoariefjsleeprj.frontend.misc.RewardsListAdapter;
-import com.eriqoariefjsleeprj.frontend.misc.UpcomingListAdapter;
-import com.eriqoariefjsleeprj.frontend.model.Fixture;
+import com.eriqoariefjsleeprj.frontend.model.MyReward;
 import com.eriqoariefjsleeprj.frontend.model.Reward;
 import com.eriqoariefjsleeprj.frontend.request.BaseApiService;
 import com.eriqoariefjsleeprj.frontend.request.UtilsApi;
@@ -25,15 +24,13 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link RedeemFragment#newInstance} factory method to
+ * Use the {@link MyRewardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RedeemFragment extends Fragment {
+public class MyRewardFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,9 +43,9 @@ public class RedeemFragment extends Fragment {
 
     BaseApiService mApiService;
     Context mContext;
-    private FragmentRedeemBinding binding;
+    private FragmentMyRewardBinding binding;
 
-    public RedeemFragment() {
+    public MyRewardFragment() {
         // Required empty public constructor
     }
 
@@ -58,11 +55,11 @@ public class RedeemFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment RedeemFragment.
+     * @return A new instance of fragment MyRewardFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RedeemFragment newInstance(String param1, String param2) {
-        RedeemFragment fragment = new RedeemFragment();
+    public static MyRewardFragment newInstance(String param1, String param2) {
+        MyRewardFragment fragment = new MyRewardFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -83,7 +80,7 @@ public class RedeemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentRedeemBinding.inflate(inflater, container, false);
+        binding = FragmentMyRewardBinding.inflate(inflater, container, false);
         View rootView = binding.getRoot();
 
         mApiService = UtilsApi.getApiService();
@@ -94,23 +91,22 @@ public class RedeemFragment extends Fragment {
         }
 
         //update user's point balance
-        binding.rewardsPointsBalance.setText(String.valueOf(LoginActivity.currentUser.getTotal_points()));
+        binding.myRewardPointsBalance.setText(String.valueOf(LoginActivity.currentUser.getTotal_points()));
 
-        requestRewards();
-
+        requestMyRewards(LoginActivity.currentUser.getId());
         return rootView;
     }
 
-    protected ArrayList<Reward> requestRewards(){
-        mApiService.getRewards().enqueue(new Callback<ArrayList<Reward>>() {
+    protected ArrayList<MyReward> requestMyRewards(int userId){
+        mApiService.getMyRewards(userId).enqueue(new Callback<ArrayList<MyReward>>() {
             @Override
-            public void onResponse(Call<ArrayList<Reward>> call, Response<ArrayList<Reward>> response) {
+            public void onResponse(Call<ArrayList<MyReward>> call, Response<ArrayList<MyReward>> response) {
                 if (response.code() == 200) {
-                    ArrayList<Reward> rewards = response.body();
-                    if(rewards != null && !rewards.isEmpty()) {
-                        RewardsListAdapter rewardsListAdapter = new RewardsListAdapter(mContext, rewards);
-                        binding.listRewards.setAdapter(rewardsListAdapter);
-                        binding.listRewards.setClickable(true);
+                    ArrayList<MyReward> myRewards = response.body();
+                    if(myRewards != null && !myRewards.isEmpty()) {
+                        MyRewardsListAdapter myRewardsListAdapter = new MyRewardsListAdapter(mContext, myRewards);
+                        binding.listMyReward.setAdapter(myRewardsListAdapter);
+                        binding.listMyReward.setClickable(true);
                     }else{
                         Toast.makeText(mContext, "Failed to load data", Toast.LENGTH_SHORT).show();
                     }
@@ -120,8 +116,8 @@ public class RedeemFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Reward>> call, Throwable t) {
-                Toast.makeText(mContext, "Failed to reach server", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<ArrayList<MyReward>> call, Throwable t) {
+                Toast.makeText(mContext, "You currently don't have any rewards", Toast.LENGTH_SHORT).show();
             }
         });
         return null;
